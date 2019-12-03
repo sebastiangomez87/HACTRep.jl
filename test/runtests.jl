@@ -45,12 +45,23 @@ results4=TimeKF(results3.a,results3.z,results3.A,resultsKF,0.03*ones(100),20)
 @test results4[10,20]≈1.436654872087002
 @test results4[40,30]≈0.5845834701237425
 
+resultsS=shockSim()
+
+@test resultsS[1]<=-0.1
+@test resultsS[end]>=0.029
+
 resultsh=HJBequationHousing(0.03,0.5)
 
 @test resultsh.h[200]≈2.3927855711422845
 @test resultsh.h[1]≈0.0
 @test resultsh.h[500]≈5.6126932999996875
 @test resultsh.v[250]≈-76.42190579246638
+
+resultsKFT=KFHousing(resultsh.a,resultsh.z,resultsh.A)
+
+@test resultsKFT[1]>=4.0
+@test resultsKFT[2]<=2.0
+@test resultsKFT[end]≈0.0
 
 #@testset "Heterogeneous-Agents-Continuous-Time.jl" begin
     # Write your own tests here.
