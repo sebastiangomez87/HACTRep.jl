@@ -468,28 +468,10 @@ function shockSim()
     p2=plot(a[1:100], [g[1:100,1] g[Na+1:Na+100,1] g[1:100,3] g[Na+1:Na+100,3]],xlabel="Wealth",title="t=0.06",label=["y1 t=0" "y2  t=0" "y1 t=0.06" "y2  t=0.06"],linecolor=["red" "blue" "red" "blue"],linestyle=[:solid :solid :dash :dash])
     p3=plot(a[1:100], [g[1:100,1] g[Na+1:Na+100,1] g[1:100,N+1] g[Na+1:Na+100,N+1]],xlabel="Wealth",title="Long run",label=["y1 t=0" "y2  t=0" "y1 t=T" "y2  t=T"],linecolor=["red" "blue" "red" "blue"],linestyle=[:solid :solid :dash :dash])
     display(plot(p1,p2,p3,layout=(1,3)))
+    return rl1
 end
 
 export shockSim
-
-function optimalh(a, ϕ, r, p, h,f)
-    #Finds the optimal h given a value of wealth a. In this case the input a is a value, while h is a vector of possible values of h.
-    #From the paper it should have this shape={0,[hmin,\infty]}
-    #f is the function of housing in the utility function
-
-    #Possible values of utility for all h
-    temp=f.(h)
-    temp[p*h.>ϕ*a].=-Inf
-    #Position of the optimal h
-    hopt=argmax(temp)
-    #Value at optimum
-    ftilda=f(h[hopt])
-
-    return (ftilda,hopt)
-
-end
-
-export optimalh
 
 function HJBequationHousing(r0, lambda2)
         #This function solves the HJB equation using the implicit method in Achdou et al (2017)
@@ -718,4 +700,3 @@ end
 export KFHousing
 
 end # module
-
